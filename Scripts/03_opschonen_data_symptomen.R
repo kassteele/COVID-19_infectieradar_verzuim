@@ -4,9 +4,12 @@
 
 data_symptomen <- data_symptomen_org %>%
   mutate(
-    Week = Date_of_statistics %>%
+    Week = timestamp.weekly %>%
       floor_date(unit = "week")) %>%
   group_by(
     Week) %>%
   summarise(
-    Perc_symptomen = mean(Perc_covid_symptoms, na.rm = TRUE))
+    n_symptomen = total_cases %>% sum(na.rm = TRUE),
+    n_personen = total_rep %>% sum(na.rm = TRUE)) %>%
+  mutate(
+    Perc_symptomen = n_symptomen/n_personen)
