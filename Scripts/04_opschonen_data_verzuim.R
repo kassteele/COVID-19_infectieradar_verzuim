@@ -54,7 +54,7 @@ data_verzuim <- data_verzuim_org %>%
   mutate(
     Bedrijfstak = Bedrijfstak %>% factor() %>% fct_inorder(),
     Week = Week %>% ISOweek2date(),
-    Perc_verzuim = Perc_verzuim*100) %>%
+    Perc_verzuim = Perc_verzuim) %>%
   # Ontdubbel het een en ander. Behoud de eerste
   # A - Landbouw, bosbouw en visserij
   # Sommige jaren hebben onterecht een week 53
