@@ -3,21 +3,7 @@
 #
 
 plot_verzuim_tijdreeks_fit <- ggplot(
-  data = data_verzuim_tijdreeks_fit %>%
-    # Omdat de componenten in wide format staan,
-    # moeten we die eerst in long format zetten
-    pivot_longer(
-      cols = starts_with("comp"),
-      names_to = "Component",
-      values_to = "Percentage verzuim") %>%
-    # Hernoem de componenten naar iets leesbaars, e.g.
-    # comp_harm -> Seizoenseffect
-    # comp_cov -> Infectieradar
-    mutate(
-      Component = Component %>%
-        factor(
-          levels = c("comp_ar", "comp_cov", "comp_harm", "comp_trend"),
-          labels = c("Autoregressief\neffect", "Percentage klachten\nInfectieradar", "Seizoenseffect", "Grootschalige\ntrend"))),
+  data = data_verzuim_tijdreeks_plot,
   mapping = aes(x = Week, y = `Percentage verzuim`, fill = Component)) +
   geom_area() +
   geom_point(
@@ -26,12 +12,15 @@ plot_verzuim_tijdreeks_fit <- ggplot(
     shape = "+",
     size = 2,
     inherit.aes = FALSE) +
-  scale_fill_discrete_sequential(
-    palette = "ag_GrnYl",
-    rev = FALSE) +
+  # scale_fill_discrete_sequential(
+  #   palette = "ag_GrnYl",
+  #   rev = FALSE) +
+  scale_fill_manual(
+    values = c("#8fcae7", "#007bc7", "#b3d7ee", "#d9ebf7")) +
   scale_x_date(
     breaks = seq(ymd("2020-01-01"), ymd("2023-01-01"), by = "3 months"),
     date_minor_breaks = "1 month",
+    expand = expansion(add = c(7, 7)),
     date_labels = "%b '%y") +
   scale_y_continuous(
     breaks = seq(from = 0, to = 0.1, by = 0.02),
@@ -39,11 +28,12 @@ plot_verzuim_tijdreeks_fit <- ggplot(
     labels = scales::percent) +
   facet_wrap(
     facets = vars(Bedrijfstak),
-    nrow = 4, ncol = 5,
-    labeller = label_wrap_gen(width = 50)) +
+    nrow = 4, ncol = 5) +
   labs(
     title = "Wekelijks gemiddelde percentage verzuim per bedrijfstak",
-    subtitle = "Punten: gerapporteerd\nVlakken: tijdreekscomponenten",
+    subtitle = "
+    Punten: gerapporteerd, tussen haakjes het gemiddelde aantal werknemers over de periode
+    Vlakken: verklaard door tijdreekscomponenten",
     x = "Datum",
     y = "Percentage verzuim",
     fill = NULL) +
