@@ -18,6 +18,9 @@ options(
   mc.cores = detectCores(),
   lubridate.week.start = 1)
 
+# Datums in NL naamgeving
+Sys.setlocale(category = "LC_TIME", locale = "nl_NL.UTF-8")
+
 # Seizoensperiode in weken
 p_seizoen <- 365.25/7
 
