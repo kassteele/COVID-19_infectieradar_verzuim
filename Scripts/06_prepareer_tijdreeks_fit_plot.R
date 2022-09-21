@@ -40,3 +40,9 @@ data_verzuim_tijdreeks_plot <- data_verzuim_tijdreeks_fit %>%
           "Percentage COVID-19\ngerelateerde klachten\nInfectieradar",
           "Seizoenseffect",
           "Grootschalige\ntrend")))
+
+# Laatste week
+max_week <- data_verzuim_tijdreeks_plot %>%
+  pull(
+    Week) %>%
+  max()
