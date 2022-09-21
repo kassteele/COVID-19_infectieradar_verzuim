@@ -12,9 +12,6 @@ plot_verzuim_tijdreeks_fit <- ggplot(
     shape = "+",
     size = 2,
     inherit.aes = FALSE) +
-  # scale_fill_discrete_sequential(
-  #   palette = "ag_GrnYl",
-  #   rev = FALSE) +
   scale_fill_manual(
     values = c("#8fcae7", "#007bc7", "#b3d7ee", "#d9ebf7")) +
   scale_x_date(
@@ -30,7 +27,7 @@ plot_verzuim_tijdreeks_fit <- ggplot(
     facets = vars(Bedrijfstak),
     nrow = 4, ncol = 5) +
   labs(
-    title = "Wekelijks gemiddelde percentage verzuim per bedrijfstak",
+    title = str_glue("Wekelijks gemiddelde percentage verzuim per bedrijfstak t/m {format(max_week, '%e %B %Y')}"),
     subtitle = "
     Punten: gerapporteerd, tussen haakjes het gemiddelde aantal werknemers over de periode
     Vlakken: verklaard door tijdreekscomponenten",
